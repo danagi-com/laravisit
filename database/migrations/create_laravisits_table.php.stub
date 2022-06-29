@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('laravisits', function (Blueprint $table) {
             $table->id();
             $table->morphs('visitable');
+            $table->string('type');
             $table->json('data');
             $table->timestamps();
         });

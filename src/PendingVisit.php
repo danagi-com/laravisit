@@ -11,26 +11,30 @@ use Illuminate\Database\Eloquent\Model;
 class PendingVisit
 {
     use SetsPendingIntervals;
+
     /**
      * @var array
      *
      */
     protected $attributes = [];
 
-    public function __construct(protected Model $model)
+    /**
+     * @throws VisitException
+     */
+    public function __construct(protected Model $model, ?string $type = null)
     {
         if (! $model instanceof \Coderflex\Laravisit\Concerns\CanVisit) {
             throw VisitException::interfaceNotImplemented($model);
         }
 
         // set daily intervals by default
-        $this->dailyIntervals();
+        $this->dailyIntervals(null, $type);
     }
 
     /**
      * Set IP attribute
      *
-     * @param string $ip
+     * @param string|null $ip
      * @return $this
      */
     public function withIP(string $ip = null): self
@@ -45,6 +49,7 @@ class PendingVisit
      *
      * @param array $data
      * @return $this
+     * @throws InvalidDataException
      */
     public function withData(array $data): self
     {
@@ -71,7 +76,7 @@ class PendingVisit
     }
 
     /**
-     * Build Json Columns from the given attribues
+     * Build Json Columns from the given attributes
      *
      * @return array
      */

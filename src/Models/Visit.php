@@ -16,21 +16,21 @@ class Visit extends Model implements CanPresent
      *
      * @var string
      */
-    protected $table = "laravisits";
+    protected string $table = 'laravisits';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
-    protected $guarded = [];
+    protected array $guarded = [];
 
     /**
      * The attributes that should be cast.
      *
      * @var array
      */
-    protected $casts = [
+    protected array $casts = [
         'data' => 'json',
     ];
 
@@ -39,10 +39,13 @@ class Visit extends Model implements CanPresent
      *
      * @var array
      */
-    protected $presenters = [
+    protected array $presenters = [
         'default' => VisitPresenter::class,
     ];
 
+    /**
+     * @return mixed
+     */
     public function visitable()
     {
         return $this->morphTo();
